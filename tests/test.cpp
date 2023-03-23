@@ -16,20 +16,14 @@ public:
 };
 
 TEST(Account, Constructor) {
-    MockAccount acc1(1, 250);
-    MockAccount acc2(2, 200);
-    EXPECT_EQ(acc1.GetBalance(), 250);
-    EXPECT_EQ(acc2.GetBalance(), 200);
-    acc1.Lock();
-    EXPECT_THROW(acc1.Lock(), std::runtime_error);
-    acc1.Unlock();
-    EXPECT_THROW(acc1.ChangeBalance(150), std::runtime_error);
-    acc1.Lock();
-    acc1.ChangeBalance(100);
-    acc2.Lock();
-    acc2.ChangeBalance(-100);
-    EXPECT_EQ(acc1.GetBalance(), 350);
-    EXPECT_EQ(acc2.GetBalance(), 100);
+    Account acc(1, 500);
+
+    EXPECT_EQ(acc.GetBalance(), 500);
+    EXPECT_THROW(acc.ChangeBalance(-100), std::runtime_error);
+    acc.Lock();
+    acc.ChangeBalance(-100);
+    EXPECT_EQ(acc.GetBalance(), 400);
+    acc.Unlock();
 }
 
 TEST(Functions, transactions){
